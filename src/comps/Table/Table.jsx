@@ -10,13 +10,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 const BasicTable = () => { 
-    const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/users`)
-      .then((res) => setUsers(res.data))
-      .catch((err) => console.log(err));
+  useEffect(() => {
+  axios
+    .get(`https://jsonplaceholder.typicode.com/users`)
+    .then((res) => setUsers(res.data))
+    .catch((err) => console.log(err));
   }, []);
 
   return (
