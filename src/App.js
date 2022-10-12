@@ -1,11 +1,14 @@
-import BasicTable from './comps/Table/Table';
+import { Routes, Route } from 'react-router-dom';
+import HomePage from './views/HomePage';
+import UserPage from './views/UserPage';
 import './App.css';
 
-function App() {   
+function App() {
   return (
-    <div className="App">       
-      <BasicTable/>     
-    </div>
+    <Routes> 
+        <Route path="/" element={<HomePage />} />
+        <Route path="/:userId" element={<UserPage />}/>      
+    </Routes>
   );
 }
 

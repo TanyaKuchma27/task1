@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper }  from '@mui/material';
 
@@ -23,6 +23,7 @@ const BasicTable = () => {
             <TableCell align="right">Email</TableCell>
             <TableCell align="right">Phone</TableCell>
             <TableCell align="right">Website</TableCell>
+            <TableCell align="right">Info</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -36,6 +37,9 @@ const BasicTable = () => {
               <TableCell align="right">{email}</TableCell>
               <TableCell align="right">{phone}</TableCell>
               <TableCell align="right">{website}</TableCell>
+              <TableCell align="right">
+                <Link to={`/${id}`}>more info</Link>                
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

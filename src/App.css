@@ -1,4 +1,7 @@
-.App {
-  padding-top: 30px;
+.App {  
   text-align: center;  
+}
+
+.User {
+  margin: 30px;
 }
