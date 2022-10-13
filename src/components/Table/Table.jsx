@@ -1,9 +1,10 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper }  from '@mui/material';
-import { useUsers } from '../../context/usersContext';
+import { UsersContext } from '../../context/usersContext';
 
 const BasicTable = () => { 
-  const { users } = useUsers();
+  const { users } = useContext(UsersContext);
 
   return (
     <TableContainer component={Paper}>
@@ -19,7 +20,8 @@ const BasicTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map(({ id, name, username, email, phone, website }) => (
+          {!users && <h2>Loading...</h2>}
+          {users && users.map(({ id, name, username, email, phone, website }) => (
             <TableRow
               key={id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

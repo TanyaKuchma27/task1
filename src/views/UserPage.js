@@ -1,13 +1,14 @@
+import { useContext, useEffect, useState } from "react";
 import { useParams, useLocation } from 'react-router-dom';
-import { useEffect, useState } from "react";
-import { useUsers } from '../context/usersContext';
+import axios from 'axios';
+import { UsersContext } from '../context/usersContext';
 import GoBackButton from '../components/GoBackButton/GoBackButton';
 
 export default function UserPage() {
     const { userId } = useParams();
     const [user, setUser] = useState([]);
+    const { users } = useContext(UsersContext); 
     const location = useLocation();
-    const { users } = useUsers();    
 
     useEffect(() => {
         getListUser()
@@ -16,8 +17,14 @@ export default function UserPage() {
 
     async function getListUser() {
         try {
-            const user = users.find(item => item.id === Number(userId));
-            setUser(user)
+            if(users.length > 0) {
+                const user = users.find(item => item.id === Number(userId));
+                setUser(user)
+            } else {
+                const {data} = await axios.get('https://jsonplaceholder.typicode.com/users');
+                const user = data.find(item => item.id === Number(userId));
+                setUser(user)
+            }
         } catch (error) {
             console.log(error)
         }

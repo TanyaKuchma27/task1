@@ -1,17 +1,20 @@
+import { useState } from "react";
 import { Routes, Route } from 'react-router-dom';
-import { UsersProvider  } from './context/usersContext';
+import { UsersContext  } from './context/usersContext';
 import HomePage from './views/HomePage';
 import UserPage from './views/UserPage';
 import './App.css';
 
 function App() {
+  const [people, setPeople] = useState([]);
+
   return (
-    <UsersProvider>
+    <UsersContext.Provider value={{ users: people }}>
       <Routes> 
-        <Route path="/" element={<HomePage />} />
-        <Route path="/:userId" element={<UserPage />}/>      
+        <Route path="/" element={<HomePage users={setPeople} />} />
+        <Route path="/:userId" element={<UserPage users={setPeople} />}/>      
       </Routes>
-    </UsersProvider>
+    </UsersContext.Provider>
   );
 }
 
