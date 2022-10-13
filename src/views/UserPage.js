@@ -2,11 +2,13 @@ import { useParams, useLocation } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import GoBackButton from '../components/GoBackButton/GoBackButton';
+import { useUser } from '../context/userContext';
 
 export default function UserPage() {
     const { userId } = useParams();
     const [user, setUser] = useState([]);
     const location = useLocation();
+    const { isLoggedIn, username, logIn, logOut } = useUser();
     
     // useEffect(() => {
     //     axios
@@ -21,6 +23,7 @@ export default function UserPage() {
 
     useEffect(() => {
         getListUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     async function getListUser() {
@@ -38,7 +41,13 @@ export default function UserPage() {
             {!user && <h2>Loading...</h2>}
             { user && (
                 <div className="User">
-                    <GoBackButton location={location}/>
+                    <GoBackButton location={location} />
+                    {isLoggedIn && <p>{username}</p>}
+                    {isLoggedIn ? (
+                        <button onClick={logOut}>Log out</button>
+                        ) : (
+                        <button onClick={logIn}>Log in</button>
+                    )}
                     <h2>Name: {user.name}</h2>
                     <p>Username: {user.username}</p>
                     <p>Email: {user.email}</p>

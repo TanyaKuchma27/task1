@@ -6,8 +6,8 @@ import './App.css';
 function App() {
   return (
     <Routes> 
-        <Route path="/" element={<HomePage />} />
-        <Route path="/:userId" element={<UserPage />}/>      
+      <Route path="/" element={<HomePage />} />
+      <Route path="/:userId" element={<UserPage />}/>      
     </Routes>
   );
 }
