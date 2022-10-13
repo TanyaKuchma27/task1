@@ -12,7 +12,7 @@ function App() {
     <UsersContext.Provider value={{ users: people }}>
       <Routes> 
         <Route path="/" element={<HomePage users={setPeople} />} />
-        <Route path="/:userId" element={<UserPage users={setPeople} />}/>      
+        <Route path="/:userId" element={<UserPage/>}/>      
       </Routes>
     </UsersContext.Provider>
   );
