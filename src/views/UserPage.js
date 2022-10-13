@@ -8,16 +8,30 @@ export default function UserPage() {
     const [user, setUser] = useState([]);
     const location = useLocation();
     
+    // useEffect(() => {
+    //     axios
+    //         .get(`https://jsonplaceholder.typicode.com/users`)
+    //         .then((res) => {
+    //             const users = res.data;
+    //             const user = users.find(item => item.id === Number(userId));
+    //             setUser(user)
+    //         })
+    //         .catch((err) => console.log(err));
+    // }, [userId]);
+
     useEffect(() => {
-        axios
-            .get(`https://jsonplaceholder.typicode.com/users`)
-            .then((res) => {
-                const users = res.data;
-                const user = users.find(item => item.id === Number(userId));
-                setUser(user)
-            })
-            .catch((err) => console.log(err));
+        getListUser()
     }, [userId]);
+
+    async function getListUser() {
+        try {
+            const {data} = await axios.get('https://jsonplaceholder.typicode.com/users');
+            const user = data.find(item => item.id === Number(userId));
+            setUser(user)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
