@@ -1,25 +1,13 @@
 import { useParams, useLocation } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import { useUsers } from '../context/usersContext';
 import GoBackButton from '../components/GoBackButton/GoBackButton';
-import { useUser } from '../context/userContext';
 
 export default function UserPage() {
     const { userId } = useParams();
     const [user, setUser] = useState([]);
     const location = useLocation();
-    const { isLoggedIn, username, logIn, logOut } = useUser();
-    
-    // useEffect(() => {
-    //     axios
-    //         .get(`https://jsonplaceholder.typicode.com/users`)
-    //         .then((res) => {
-    //             const users = res.data;
-    //             const user = users.find(item => item.id === Number(userId));
-    //             setUser(user)
-    //         })
-    //         .catch((err) => console.log(err));
-    // }, [userId]);
+    const { users } = useUsers();    
 
     useEffect(() => {
         getListUser()
@@ -28,8 +16,7 @@ export default function UserPage() {
 
     async function getListUser() {
         try {
-            const {data} = await axios.get('https://jsonplaceholder.typicode.com/users');
-            const user = data.find(item => item.id === Number(userId));
+            const user = users.find(item => item.id === Number(userId));
             setUser(user)
         } catch (error) {
             console.log(error)
@@ -42,12 +29,6 @@ export default function UserPage() {
             { user && (
                 <div className="User">
                     <GoBackButton location={location} />
-                    {isLoggedIn && <p>{username}</p>}
-                    {isLoggedIn ? (
-                        <button onClick={logOut}>Log out</button>
-                        ) : (
-                        <button onClick={logIn}>Log in</button>
-                    )}
                     <h2>Name: {user.name}</h2>
                     <p>Username: {user.username}</p>
                     <p>Email: {user.email}</p>

@@ -1,17 +1,9 @@
-import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper }  from '@mui/material';
+import { useUsers } from '../../context/usersContext';
 
 const BasicTable = () => { 
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-  axios
-    .get(`https://jsonplaceholder.typicode.com/users`)
-    .then((res) => setUsers(res.data))
-    .catch((err) => console.log(err));
-  }, []);
+  const { users } = useUsers();
 
   return (
     <TableContainer component={Paper}>
