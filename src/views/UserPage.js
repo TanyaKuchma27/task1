@@ -1,55 +1,30 @@
 import { useParams, useLocation } from 'react-router-dom';
-import { useEffect, useState } from "react";
-import axios from 'axios';
+import { useFetchUserQuery } from '../redux/userSlice';
 import GoBackButton from '../components/GoBackButton/GoBackButton';
 
 export default function UserPage() {
     const { userId } = useParams();
-    const [user, setUser] = useState([]);
     const location = useLocation();
-    
-    // useEffect(() => {
-    //     axios
-    //         .get(`https://jsonplaceholder.typicode.com/users`)
-    //         .then((res) => {
-    //             const users = res.data;
-    //             const user = users.find(item => item.id === Number(userId));
-    //             setUser(user)
-    //         })
-    //         .catch((err) => console.log(err));
-    // }, [userId]);
-
-    useEffect(() => {
-        getListUser()
-    }, [userId]);
-
-    async function getListUser() {
-        try {
-            const {data} = await axios.get('https://jsonplaceholder.typicode.com/users');
-            const user = data.find(item => item.id === Number(userId));
-            setUser(user)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const { isFetching, data: users } = useFetchUserQuery(); 
+    const user = users?.find(item => item.id === Number(userId));  
 
     return (
         <>
-            {!user && <h2>Loading...</h2>}
-            { user && (
+            {isFetching && <h2> Loading... </h2>}
+            {user && (
                 <div className="User">
-                    <GoBackButton location={location}/>
-                    <h2>Name: {user.name}</h2>
-                    <p>Username: {user.username}</p>
-                    <p>Email: {user.email}</p>
+                    <GoBackButton location={location} />
+                    <h2>Name: {user?.name}</h2>
+                    <p>Username: {user?.username}</p>
+                    <p>Email: {user?.email}</p>
                     <p>Address:</p>
                     <p>street: {user?.address?.street}</p>
                     <p>suite: {user?.address?.suite}</p>
                     <p>city: {user?.address?.city}</p>
-                    <p>Phone: {user.phone}</p>
-                    <p>Website: {user.website}</p>
+                    <p>Phone: {user?.phone}</p>
+                    <p>Website: {user?.website}</p>
                 </div>
-            )}
+            )}          
         </>
     );
 };
