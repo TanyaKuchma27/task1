@@ -14,15 +14,15 @@ export default function UserPage() {
             {user && (
                 <div className="User">
                     <GoBackButton location={location} />
-                    <h2>Name: {user?.name}</h2>
-                    <p>Username: {user?.username}</p>
-                    <p>Email: {user?.email}</p>
+                    <h2>Name: {user.name}</h2>
+                    <p>Username: {user.username}</p>
+                    <p>Email: {user.email}</p>
                     <p>Address:</p>
-                    <p>street: {user?.address?.street}</p>
-                    <p>suite: {user?.address?.suite}</p>
-                    <p>city: {user?.address?.city}</p>
-                    <p>Phone: {user?.phone}</p>
-                    <p>Website: {user?.website}</p>
+                    <p>street: {user.address.street}</p>
+                    <p>suite: {user.address.suite}</p>
+                    <p>city: {user.address.city}</p>
+                    <p>Phone: {user.phone}</p>
+                    <p>Website: {user.website}</p>
                 </div>
             )}          
         </>
