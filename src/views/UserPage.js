@@ -1,16 +1,24 @@
+import { useEffect } from "react";
 import { useParams, useLocation } from 'react-router-dom';
-import { useFetchUserQuery } from '../redux/userSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "../redux/operations";
+import { getUsers } from "../redux/selectors";
 import GoBackButton from '../components/GoBackButton/GoBackButton';
 
 export default function UserPage() {
     const { userId } = useParams();
     const location = useLocation();
-    const { isFetching, data: users } = useFetchUserQuery(); 
+    const dispatch = useDispatch();
+    const { items: users, isLoading } = useSelector(getUsers); 
     const user = users?.find(item => item.id === Number(userId));  
+
+    useEffect(() => {
+        dispatch(fetchUsers());
+    }, [dispatch]); 
 
     return (
         <>
-            {isFetching && <h2> Loading... </h2>}
+            {isLoading && <h2> Loading... </h2>}
             {user && (
                 <div className="User">
                     <GoBackButton location={location} />
