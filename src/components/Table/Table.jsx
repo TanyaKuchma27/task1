@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { fetchUsers } from "../../redux/operations";
-import { getUsers } from "../../redux/selectors";
+import { getUsers } from "../../redux/usersSlice";
 
 const BasicTable = () => { 
   const dispatch = useDispatch();
-  const { items: users, isLoading } = useSelector(getUsers);
+  const users = useSelector(getUsers.selectAll);  
+  const isLoading = useSelector(({ users }) => users.isLoading);  
 
   useEffect(() => {
     dispatch(fetchUsers());

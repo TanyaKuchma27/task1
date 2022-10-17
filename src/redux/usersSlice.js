@@ -1,25 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 import { fetchUsers } from "./operations";
+
+const usersAdapter = createEntityAdapter({
+  selectId: (user) => user.id,
+});
+
+export const getUsers = usersAdapter.getSelectors((state) => state.users);
 
 const usersSlice = createSlice({
   name: "users",
-  initialState: {
-    items: [],
-    isLoading: false,
-    error: null,
-  },
+  initialState: usersAdapter.getInitialState({ isLoading: false, error: null }),
+  reducers: {},
   extraReducers: {
     [fetchUsers.pending](state) {
       state.isLoading = true;
     },
-    [fetchUsers.fulfilled](state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.items = action.payload;
+    [fetchUsers.fulfilled](state, { payload }) {
+      state.isLoading = false;      
+      usersAdapter.setAll(state, payload);
     },
     [fetchUsers.rejected](state, action) {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = action.error.message
     },
   },
 });
